@@ -231,7 +231,7 @@ def change_entity_hidden(
 ) -> Dict[str, Any]:
     """Hide/unhide entity."""
     frame = {
-        'type': hass.WS_TYPE_DEVICE_REGISTRY_UPDATE,
+        'type': hass.WS_TYPE_ENTITY_REGISTRY_UPDATE,
         'entity_id': entity_id,
         'hidden_by': 'user' if hide else None,
     }
