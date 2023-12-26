@@ -182,3 +182,55 @@ def rename(ctx, oldid, newid, name):
             columns=ctx.columns if ctx.columns else const.COLUMNS_DEFAULT,
         )
     )
+
+@cli.command('hide')
+@click.argument(
+    'entity_id',
+    required=True,
+    shell_complete=autocompletion.entities,  # type: ignore
+)
+@pass_context
+def hide(ctx, entity_id):
+    """Hide an entity."""
+    ctx.auto_output("data")
+
+    entity = api.get_entity(ctx, entity_id)
+    if not entity:
+        _LOGGING.error("Could not find entity with ID: %s", entity_id)
+        sys.exit(1)
+
+    result = api.change_entity_hidden(ctx, entity_id, True)
+
+    ctx.echo(
+        helper.format_output(
+            ctx,
+            [result],
+            columns=ctx.columns if ctx.columns else const.COLUMNS_DEFAULT,
+        )
+    )
+
+@cli.command('unhide')
+@click.argument(
+    'entity_id',
+    required=True,
+    shell_complete=autocompletion.entities,  # type: ignore
+)
+@pass_context
+def hide(ctx, entity_id):
+    """Unide an entity."""
+    ctx.auto_output("data")
+
+    entity = api.get_entity(ctx, entity_id)
+    if not entity:
+        _LOGGING.error("Could not find entity with ID: %s", entity_id)
+        sys.exit(1)
+
+    result = api.change_entity_hidden(ctx, entity_id, False)
+
+    ctx.echo(
+        helper.format_output(
+            ctx,
+            [result],
+            columns=ctx.columns if ctx.columns else const.COLUMNS_DEFAULT,
+        )
+    )

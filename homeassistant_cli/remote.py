@@ -224,6 +224,19 @@ def rename_entity(
 
     return cast(Dict[str, Any], wsapi(ctx, frame))
 
+def change_entity_hidden(
+    ctx: Configuration,
+    entity_id: str,
+    hide: bool,
+) -> Dict[str, Any]:
+    """Hide/unhide entity."""
+    frame = {
+        'type': hass.WS_TYPE_DEVICE_REGISTRY_UPDATE,
+        'entity_id': entity_id,
+        'hidden_by': 'user' if hide else None,
+    }
+
+    return cast(Dict[str, Any], wsapi(ctx, frame))
 
 def rename_device(
     ctx: Configuration, device_id: str, new_name: str
